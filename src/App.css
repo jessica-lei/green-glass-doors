@@ -1,0 +1,25 @@
+#root {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.App {
+  background-color: #40916c;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.hero {
+  color: #d8f3dc
+}
+
+.input {
+  width: 200px;
+  height: 20px;
+  border-radius: 1px;
+  border-width: 0px;
+  color: #2a5e47;
+  font-weight: bold
+}
