@@ -5,6 +5,37 @@ import './App.css'
 
 function App() {
   const [modalShow, setModalShow] = useState(false);
+  const [inputText, setInputText] = useState("");
+
+  function handleChange(e) {
+    setInputText(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    
+    checkDoubleLetter(inputText);
+    setInputText("");
+  }
+
+  function checkDoubleLetter(inputText) {
+    const words = inputText.split(" ");
+
+    // Checking for double letter AND not triple letter
+    const doubleRegex = /([a-zA-Z])\1{1}/i;
+    const tripleRegex = /([a-zA-Z])\1{2}/i;
+
+    for (let word of words) {
+      if (!doubleRegex.test(word)) {
+        return false;
+      }
+      if (tripleRegex.test(word)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 
   return (
     <div className="App">
@@ -13,31 +44,12 @@ function App() {
         <h1>GREEN GLASS DOORS</h1>
         <h3>what are you bringing in?</h3>
       </div>
-      <input className="input" />
+      <form onSubmit={handleSubmit}>
+        <input type="text" className="input" onChange={handleChange} value={inputText} />
+      </form>
     </div>
-    // <>
-    //   <div>
-    //     <a href="https://vitejs.dev" target="_blank">
-    //       <img src={viteLogo} className="logo" alt="Vite logo" />
-    //     </a>
-    //     <a href="https://react.dev" target="_blank">
-    //       <img src={reactLogo} className="logo react" alt="React logo" />
-    //     </a>
-    //   </div>
-    //   <h1>Vite + React</h1>
-    //   <div className="card">
-    //     <button onClick={() => setCount((count) => count + 1)}>
-    //       count is {count}
-    //     </button>
-    //     <p>
-    //       Edit <code>src/App.jsx</code> and save to test HMR
-    //     </p>
-    //   </div>
-    //   <p className="read-the-docs">
-    //     Click on the Vite and React logos to learn more
-    //   </p>
-    // </>
   )
 }
 
 export default App
+
