@@ -1,11 +1,13 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import Modal from './Modal/Modal';
+import { createPortal } from "react-dom";
+
 
 function App() {
   const [modalShow, setModalShow] = useState(false);
   const [inputText, setInputText] = useState("");
+  const [isAccessGranted, setIsAccessGranted] = useState(false);
 
   function handleChange(e) {
     setInputText(e.target.value);
@@ -14,7 +16,8 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
     
-    checkDoubleLetter(inputText);
+    setIsAccessGranted(checkDoubleLetter(inputText));
+    setModalShow(true);
     setInputText("");
   }
 
@@ -47,6 +50,11 @@ function App() {
       <form onSubmit={handleSubmit}>
         <input type="text" className="input" onChange={handleChange} value={inputText} />
       </form>
+      {modalShow && createPortal(
+        <Modal onClose={() => setModalShow(false)} isAccessGranted={isAccessGranted} />,
+        document.body
+        )
+      }
     </div>
   )
 }
